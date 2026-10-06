@@ -43,19 +43,3 @@ index 6e298f997d..62ede84a77 100644
      VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
  
  #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
-diff --git a/meson.build b/meson.build
-index 40e3f4ec44..2cde733abc 100644
---- a/meson.build
-+++ b/meson.build
-@@ -1422,6 +1422,11 @@ if not get_option('virglrenderer').auto() or have_system or have_vhost_user_gpu
-                      method: 'pkg-config',
-                      required: get_option('virglrenderer'))
- endif
-+if virgl.version().version_compare('>= 1.0.0')
-+  message('Enabling virglrenderer unstable APIs')
-+  virgl = declare_dependency(compile_args: '-DVIRGL_RENDERER_UNSTABLE_APIS -DVIRGL_RENDERER_VENUS',
-+                            dependencies: virgl)
-+endif
- rutabaga = not_found
- if not get_option('rutabaga_gfx').auto() or have_system or have_vhost_user_gpu
-   rutabaga = dependency('rutabaga_gfx_ffi',
